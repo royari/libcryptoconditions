@@ -7,7 +7,7 @@ Features shared object and easy to use JSON api, as well as a command line inter
 ## Quickstart
 
 ```shell
-git clone --recursive https://github.com/libscott/libcryptoconditions
+git clone --recursive https://github.com/royari/libcryptoconditions
 cd libcryptoconditions
 ./autogen.sh
 ./configure
@@ -53,13 +53,16 @@ def call_cryptoconditions_rpc(method, params):
 Encode a JSON condition to a base64 binary string
 
 ```shell
-cryptoconditions encodeCondition '{
+./cryptoconditions.py encodeCondition '{
     "type": "ed25519-sha-256",
     "publicKey": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
 }'
+```
+output
+```
 {
-    "bin": "pCeAIHmSOauo_E_36r-8TETmnovf7ZkzJOEu1keSq-KJzx1fgQMCAAA", 
-    "uri": "ni:///sha-256;eZI5q6j8T_fqv7xMROaei9_tmTMk4S7WR5Kr4onPHV8?fpt=ed25519-sha-256&cost=131072"
+	"uri":	"ni:///sha-256;eZI5q6j8T_fqv7xMROaei9_tmTMk4S7WR5Kr4onPHV8?fpt=ed25519-sha-256&cost=131072",
+	"bin":	"A4278020799239ABA8FC4FF7EABFBC4C44E69E8BDFED993324E12ED64792ABE289CF1D5F8103020000"
 }
 ```
 
@@ -68,12 +71,21 @@ cryptoconditions encodeCondition '{
 Decode a binary condition
 
 ```shell
-cryptoconditions decodeCondition '{
-    "bin": "pCeAIHmSOauo_E_36r-8TETmnovf7ZkzJOEu1keSq-KJzx1fgQMCAAA"
+./cryptoconditions.py decodeCondition '{
+    "bin": "A4278020799239ABA8FC4FF7EABFBC4C44E69E8BDFED993324E12ED64792ABE289CF1D5F8103020000"
 }'
+```
+output
+```
 {
-    "bin": "pCeAIHmSOauo_E_36r-8TETmnovf7ZkzJOEu1keSq-KJzx1fgQMCAAA", 
-    "uri": "ni:///sha-256;eZI5q6j8T_fqv7xMROaei9_tmTMk4S7WR5Kr4onPHV8?fpt=ed25519-sha-256&cost=131072"
+	"uri":	"ni:///sha-256;eZI5q6j8T_fqv7xMROaei9_tmTMk4S7WR5Kr4onPHV8?fpt=ed25519-sha-256&cost=131072",
+	"bin":	"A4278020799239ABA8FC4FF7EABFBC4C44E69E8BDFED993324E12ED64792ABE289CF1D5F8103020000",
+	"condition":	{
+		"type":	"(anon)",
+		"fingerprint":	"eZI5q6j8T_fqv7xMROaei9_tmTMk4S7WR5Kr4onPHV8",
+		"cost":	131072,
+		"subtypes":	0
+	}
 }
 ```
 
@@ -83,14 +95,17 @@ Encode a JSON condition to a binary fulfillment. The condition must be fulfilled
 it needs to have signatures present.
 
 ```shell
-cryptoconditions encodeFulfillment '{
+./cryptoconditions.py encodeFulfillment '{
+     "type": "ed25519-sha-256",
+     "publicKey": "E0x0Ws4GhWhO_zBoUyaLbuqCz6hDdq11Ft1Dgbe9y9k",
+     "signature": "jcuovSRpHwqiC781KzSM1Jd0Qtyfge0cMGttUdLOVdjJlSBFLTtgpinASOaJpd-VGjhSGWkp1hPWuMAAZq6pAg"
+ }'
+ 
+```
+output
+```
 {
-    "type": "ed25519-sha-256",
-    "publicKey": "E0x0Ws4GhWhO_zBoUyaLbuqCz6hDdq11Ft1Dgbe9y9k",
-    "signature": "jcuovSRpHwqiC781KzSM1Jd0Qtyfge0cMGttUdLOVdjJlSBFLTtgpinASOaJpd-VGjhSGWkp1hPWuMAAZq6pAg"
-}'
-{
-    "fulfillment": "pGSAIBNMdFrOBoVoTv8waFMmi27qgs-oQ3atdRbdQ4G3vcvZgUCNy6i9JGkfCqILvzUrNIzUl3RC3J-B7Rwwa21R0s5V2MmVIEUtO2CmKcBI5oml35UaOFIZaSnWE9a4wABmrqkC"
+    "fulfillment":	"A4648020134C745ACE0685684EFF306853268B6EEA82CFA84376AD7516DD4381B7BDCBD981408DCBA8BD24691F0AA20BBF352B348CD4977442DC9F81ED1C306B6D51D2CE55D8C99520452D3B60A629C048E689A5DF951A3852196929D613D6B8C00066AEA902"
 }
 
 ```
@@ -100,12 +115,16 @@ cryptoconditions encodeFulfillment '{
 Decode a binary fulfillment
 
 ```shell
-cryptoconditions decodeFulfillment '{
-    "fulfillment": "pGSAINdamAGCsQq31Uv-08lkBzoO4XLz2qYjJa8CGmj3B1EagUDlVkMAw2CscpCG4syAboKKhId_Hrjl2XTYc-BlIkkBVV-4ghWQozusxh45cBz5tGvSW_XwWVu-JGVRQUOOehAL"
+./cryptoconditions.py decodeFulfillment '{
+    "fulfillment": "A4648020134C745ACE0685684EFF306853268B6EEA82CFA84376AD7516DD4381B7BDCBD981408DCBA8BD24691F0AA20BBF352B348CD4977442DC9F81ED1C306B6D51D2CE55D8C99520452D3B60A629C048E689A5DF951A3852196929D613D6B8C00066AEA902"
 }'
+```
+
+output
+```
 {
-    "bin": "pCeAIHmSOauo_E_36r-8TETmnovf7ZkzJOEu1keSq-KJzx1fgQMCAAA", 
-    "uri": "ni:///sha-256;eZI5q6j8T_fqv7xMROaei9_tmTMk4S7WR5Kr4onPHV8?fpt=ed25519-sha-256&cost=131072"
+    "uri":	"ni:///sha-256;j37bc776B2ydLAYpkBfGrhALhc9BBV1jesPDuJJyvzE?fpt=ed25519-sha-256&cost=131072",
+    "bin":	"A42780208F7EDB73BEFA076C9D2C06299017C6AE100B85CF41055D637AC3C3B89272BF318103020000"
 }
 ```
 
@@ -114,17 +133,22 @@ cryptoconditions decodeFulfillment '{
 Verify a fulfillment against a message and a condition URL
 
 ```shell
-cryptoconditions verifyFulfillment '{
-    "message": "",
-    "fulfillment": "pGSAINdamAGCsQq31Uv-08lkBzoO4XLz2qYjJa8CGmj3B1EagUDlVkMAw2CscpCG4syAboKKhId_Hrjl2XTYc-BlIkkBVV-4ghWQozusxh45cBz5tGvSW_XwWVu-JGVRQUOOehAL",
-    "condition": "pCeAIHmSOauo_E_36r-8TETmnovf7ZkzJOEu1keSq-KJzx1fgQMCAAA"
-}
+
+./cryptoconditions.py verifyFulfillment '{
+     "message": "48656c6c6f20576f726c642120436f6e646974696f6e7320617265206865726521",
+     "fulfillment": "a4648020ec172b93ad5e563bf4932c70e1245034c35467ef2efd4d64ebf819683467e2bf8140b62291fad9432f8f298b9c4a4895dbe293f6ffda1a68dadf0ccdef5f47a0c7212a5fea3cda97a3f4c03ea9f2e8ac1cec86a51d452127abdba09d1b6f331c070a",
+     "condition": "A427802053562115D5B494E23E4951773DB0CFE2DFE555E7E3FFEB41E4FD75CAF7C16A818103020000"
+}'
+
+```
+output
+```
 {
     "valid": true
 }
 ```
 
-### signTreeEd25519
+### signTreeEd25519 (output not verified)
 
 Sign all ed25519 nodes in a condition tree
 
